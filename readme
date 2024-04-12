@@ -1,0 +1,5 @@
+arduino~ish usb-serial lib for the ch32v203 (only tested on 203k8)
+modified the files from WCH found here: https://github.com/openwch/ch32v20x/tree/main/EVT/EXAM/USB/USBD/SimulateCDC
+removed the UART references, addes some read/write functions.
+modifications made to usb_endp.c, hw_config.c, usb_prop.c.
+Not tested on mounriver, but might work if the files are placed in the right folders.
