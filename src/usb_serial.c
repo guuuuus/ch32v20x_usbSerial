@@ -66,7 +66,10 @@ char *print_i(char *str, unsigned short len, signed long num, unsigned char base
 	str[pos] = '\n';
 	unsigned char sign = 0;
 	if (num < 0)
+	{
 		sign = 0x01;
+		num = -num;
+	}
 	if (base < 1)
 		base = 10;
 	do

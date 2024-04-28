@@ -27,7 +27,7 @@ volatile unsigned char rxDataTail = 0;
 volatile unsigned char rxDataHead = 0;
 
 unsigned char txData[64];
-unsigned char txCount = 0;
+volatile char unsigned txCount = 0;
 volatile unsigned char usbNotReady = 1;
 
 void usbSerial_begin()
@@ -73,10 +73,10 @@ void usbSerial_flush()
 	while (usbSerial_writeReady() == 0)
 
 	{
-		if (timeout > 10000000) // some arbitrary number.....
+		if (timeout > 500) // some arbitrary number.....
 			return;
 		timeout++;
-		NOP_Process;
+		// NOP_Process;
 	}
 	USB_SIL_Write(EP3_IN, txData, txCount);
 	USBD_Endp3_Busy = 1;
@@ -90,9 +90,10 @@ void usbSerial_writeP(unsigned char *p, unsigned short len)
 	{
 		txData[txCount] = p[i];
 		txCount++;
-		if (txCount >= 64)
+		if (txCount > 63)
 		{
 			usbSerial_flush();
+			txCount = 0;
 		}
 	}
 }
